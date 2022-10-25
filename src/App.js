@@ -3,11 +3,6 @@ import MainContainer from './Components/MainContainer/MainContainer.jsx'
 import Footer from './Components/Footer/Footer.jsx'
 import { useEffect, useState } from 'react'
 
-const api = {
-  key: '361bf1c841e118b50c9f5673d768679d',
-  base: 'http://api.openweathermap.org/data/2.5/',
-}
-
 function App() {
 
   const [search, setSearch] = useState('');
@@ -19,7 +14,7 @@ function App() {
   
   const handleSearch = e => {
     if (e.keyCode === 13) {
-      fetch(`${api.base}weather?q=${search}&appid=${api.key}`)
+      fetch(`${process.env.REACT_APP_BASE}weather?q=${search}&appid=${process.env.REACT_APP_API_KEY}`)
         .then(response => {
           if (response.ok) {
             return response.json()
@@ -33,6 +28,15 @@ function App() {
         .catch(error => console.log(error));
     };
   };
+
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(showPosition);
+  //     console.log(showPosition)
+  //   } else { 
+  //     x.innerHTML = "Geolocation is not supported by this browser.";
+  //   }
+  // })
 
   return (
     <>
