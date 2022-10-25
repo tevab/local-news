@@ -24,7 +24,6 @@ function App() {
         .then(result => {
           console.log(result);
         })
-        .catch(console.log('error'))
     };
   };
 
