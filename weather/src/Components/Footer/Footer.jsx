@@ -4,7 +4,7 @@ class Footer extends React.Component {
   render() {
     return (
       <>
-        Footer
+        &copy; All rights reserved {new Date().getFullYear()}
       </>
     )
   }
