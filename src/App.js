@@ -20,11 +20,17 @@ function App() {
   const handleSearch = e => {
     if (e.keyCode === 13) {
       fetch(`${api.base}weather?q=${search}&appid=${api.key}`)
-        .then(res => res.json())
-        .then(result => {
-          console.log(result);
+        .then(response => {
+          if (response.ok) {
+            return response.json()
+          } else if (response.status === 404) {
+            return('Womp womp')
+          } else {
+            return('error ' + response.status)
+          }
         })
-        .catch(console.log('error'))
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
     };
   };
 
