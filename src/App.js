@@ -1,4 +1,5 @@
 import Header from './Components/Header/Header.jsx'
+import Settings from './Components/Settings/Settings.jsx';
 import MainContainer from './Components/MainContainer/MainContainer.jsx'
 import Footer from './Components/Footer/Footer.jsx'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
@@ -9,6 +10,7 @@ function App() {
   const [weather, setWeather] = useState('');
   const [loading, isLoading] = useState(true);
   const [currentLocation, setLocation] = useState('');
+  const [degree, setDegrees] = useState('');
 
   const initialLoad = useRef(true);
 
@@ -91,7 +93,11 @@ function App() {
         handleSearch={handleSearch}
         handleChange={handleChange}
       />
-      {/* {weather} */}
+      <Settings
+        degree={degree}
+       setDegrees={setDegrees}
+        weather={weather}
+      />
       <MainContainer
         loading={loading}
         weather={weather}
