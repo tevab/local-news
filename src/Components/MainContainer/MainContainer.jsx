@@ -1,10 +1,10 @@
 import React from 'react';
 
-function MainContainer() {
+function MainContainer(props) {
 
   return (
     <div className="main-container">
-      Main
+      {props.loading ? 'loading' : props.weather.name}
     </div>
   )
 }

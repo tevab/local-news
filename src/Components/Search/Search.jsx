@@ -7,6 +7,7 @@ class Search extends React.Component {
         <input type='text'
           onChange={this.props.handleChange}
           onKeyDown={this.props.handleSearch}
+          value={this.props.search}
         />
       </>
     )
