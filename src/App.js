@@ -1,13 +1,14 @@
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Header from './Components/Header/Header.jsx'
 import Settings from './Components/Settings/Settings.jsx';
 import MainContainer from './Components/MainContainer/MainContainer.jsx'
 import Footer from './Components/Footer/Footer.jsx'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+
 
 function App() {
 
   const [search, setSearch] = useState('');
-  const [weather, setWeather] = useState('');
+  const [weather, setWeather] = useState();
   const [loading, isLoading] = useState(true);
   const [currentLocation, setLocation] = useState('');
   const [degree, setDegrees] = useState('');
@@ -25,9 +26,29 @@ function App() {
     };
   };
 
- const handleSettings = e => {
-    setDegrees('Fahrenheit');
- }
+  const degrees = ['Fahrenheit', 'Celsius'];
+
+  const handleSettings = e => {
+      setDegrees('Fahrenheit');
+  }
+
+  const handleDegrees = e => {
+      setDegrees(e.target.value);
+  };
+
+  const getTemperature = () => {
+      let kelvin = weather?.main?.temp;
+      const klevinToFahrenheit = (kelvin - 273.15) * 1.8 + 32;
+      const klevinToCelsius = kelvin - 273.15;
+      if (degree === 'Fahrenheit') {
+        let value = (Math.round(klevinToFahrenheit) + 'F');
+        setTemperature(value);
+      } else if (degree === 'Celsius')  {
+        let value = (Math.round(klevinToCelsius) + 'C');
+        setTemperature(value);
+      }
+      console.log(degree)
+  };
 
   useEffect(() => {
     getLocation();
@@ -42,6 +63,14 @@ function App() {
       getWeather();
     }
   }, [currentLocation]);
+
+  useEffect(() => {
+    if (!weather) {
+      return;
+    } else {
+      getTemperature();
+    }
+  }, [weather, degree]);
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -95,6 +124,7 @@ function App() {
   return (
     <>
       <Header
+        loading={loading}
         search={search}
         handleSearch={handleSearch}
         handleSearchChange={handleSearchChange}
@@ -104,6 +134,8 @@ function App() {
         setDegrees={setDegrees}
         weather={weather}
         setTemperature={setTemperature}
+        degrees={degrees}
+        handleDegrees={handleDegrees}
       />
       <MainContainer
         loading={loading}
