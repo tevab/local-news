@@ -4,7 +4,7 @@ function MainContainer(props) {
 
   return (
     <div className="main-container">
-      {props.loading ? 'loading' : props.weather?.main?.temp}
+      {props.loading ? 'loading' : props.temperature}
     </div>
   )
 }

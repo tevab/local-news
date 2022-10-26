@@ -11,10 +11,11 @@ function App() {
   const [loading, isLoading] = useState(true);
   const [currentLocation, setLocation] = useState('');
   const [degree, setDegrees] = useState('');
+  const [temperature, setTemperature] = useState('');
 
   const initialLoad = useRef(true);
 
-  const handleChange = e => {
+  const handleSearchChange = e => {
     setSearch(e.target.value);
   }
   
@@ -24,8 +25,13 @@ function App() {
     };
   };
 
+ const handleSettings = e => {
+    setDegrees('Fahrenheit');
+ }
+
   useEffect(() => {
     getLocation();
+    handleSettings();
   }, []);
 
   useLayoutEffect(() => {
@@ -91,16 +97,18 @@ function App() {
       <Header
         search={search}
         handleSearch={handleSearch}
-        handleChange={handleChange}
+        handleSearchChange={handleSearchChange}
       />
       <Settings
         degree={degree}
-       setDegrees={setDegrees}
+        setDegrees={setDegrees}
         weather={weather}
+        setTemperature={setTemperature}
       />
       <MainContainer
         loading={loading}
         weather={weather}
+        temperature={temperature}
       />
       <Footer />
     </>

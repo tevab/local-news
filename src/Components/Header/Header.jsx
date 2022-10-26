@@ -7,7 +7,7 @@ class Header extends React.Component {
       <>
         <Search 
           search={this.props.search}
-          handleChange={this.props.handleChange}
+          handleSearchChange={this.props.handleSearchChange}
           handleSearch={this.props.handleSearch}
         />
       </>

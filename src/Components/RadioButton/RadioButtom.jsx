@@ -4,8 +4,15 @@ class RadioButton extends React.Component {
   render() {
     return (
       <>
-        <input type='radio' name='degrees' id={this.props.degree} value={this.props.degree} onClick={this.props.handleClick}/>
-        <label htmlFor={this.props.degree}>{this.props.degree}</label>
+        <input 
+          type='radio' 
+          name={this.props.id} 
+          id={this.props.value} 
+          value={this.props.value} 
+          onChange={this.props.handleClick} 
+          checked={this.props.value === this.props.buttonState}
+        />
+        <label htmlFor={this.props.value}>{this.props.value}</label>
       </>
     )
   }
