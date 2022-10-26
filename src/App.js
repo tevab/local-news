@@ -13,6 +13,7 @@ function App() {
   const [currentLocation, setLocation] = useState('');
   const [degree, setDegrees] = useState('');
   const [temperature, setTemperature] = useState('');
+  const [error, setError] = useState('');
 
   const initialLoad = useRef(true);
 
@@ -47,7 +48,6 @@ function App() {
         let value = (Math.round(klevinToCelsius) + 'C');
         setTemperature(value);
       }
-      console.log(degree)
   };
 
   useEffect(() => {
@@ -88,11 +88,12 @@ function App() {
     fetch(`${process.env.REACT_APP_LOCATION_BASE}lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json&apiKey=${process.env.REACT_APP_LOCATION_API_KEY}`, requestOptions)
     .then(response => {
       if (response.ok) {
+        setError('');
         return response.json()
       } else if (response.status === 404) {
-        return('Womp womp')
+        setError('Could not find your location :(');
       } else {
-        return('error ' + response.status)
+        setError('error ' + response.status);
       }
     })
     .then(data => {
@@ -107,16 +108,16 @@ function App() {
     fetch(`${process.env.REACT_APP_WEATHER_BASE}weather?q=${search || currentLocation}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`)
     .then(response => {
       if (response.ok) {
+        setError('');
         return response.json()
       } else if (response.status === 404) {
-        return('Womp womp')
+        setError('Invalid query')
       } else {
-        return('error ' + response.status)
+        setError('Error ' + response.status)
       }
     })
     .then(data => {
       setWeather(data);
-      console.log('getWeather ', data);
     })
     .catch(error => console.log(error));
   }
@@ -128,6 +129,7 @@ function App() {
         search={search}
         handleSearch={handleSearch}
         handleSearchChange={handleSearchChange}
+        error={error}
       />
       <Settings
         degree={degree}

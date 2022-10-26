@@ -11,6 +11,7 @@ class Header extends React.Component {
           handleSearchChange={this.props.handleSearchChange}
           handleSearch={this.props.handleSearch}
         />
+        {this.props.error}
       </>
     )
   }
