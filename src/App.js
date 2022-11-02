@@ -10,6 +10,7 @@ import Footer from './Components/Footer.jsx';
 function App() {
 
   const [profile, setProfile] = useState([]);
+  const [signedIn, setSignedIn] = useState();
   const [search, setSearch] = useState('');
   const [weather, setWeather] = useState();
   const [loading, isLoading] = useState(true);
@@ -29,6 +30,14 @@ function App() {
      };
      gapi.load('client:auth2', initClient);
   });
+
+  useEffect(() => {
+    if (profile.length === 0) {
+      setSignedIn(false);
+    } else {
+      setSignedIn(true);
+    }
+  }, [profile]);
 
   const onSuccess = (res) => {
     setProfile(res.profileObj);
@@ -157,20 +166,25 @@ function App() {
         handleSearchChange={handleSearchChange}
         error={error}
       />
-       <GoogleLogin
+      {signedIn 
+        ? 
+        <GoogleLogout
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Log out"
+          onLogoutSuccess={logOut}
+          onFailure={onFailure}
+        />
+        :
+        <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
           buttonText="Sign in with Google"
           onSuccess={onSuccess}
           onFailure={onFailure}
           cookiePolicy={'single_host_origin'}
           isSignedIn={true}
-      />
-      <GoogleLogout
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-          buttonText="Log out"
-          onLogoutSuccess={logOut}
-          onFailure={onFailure}
-      />
+        />
+      } 
+      
       {profile.name}
       <Settings
         degree={degree}
