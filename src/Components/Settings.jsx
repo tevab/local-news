@@ -1,5 +1,8 @@
 import React from 'react';
 import RadioButton from './RadioButtom.jsx'
+import { useGetData } from '../Hooks/useGetData.jsx';
+import Add from './Add.jsx';
+import FireStoreData from './FireStoreData.jsx';
 
 function Settings(props) {
 
@@ -18,6 +21,8 @@ function Settings(props) {
                     )
                 )
             }
+            <Add />
+            <FireStoreData />
         </>
     )
 }
