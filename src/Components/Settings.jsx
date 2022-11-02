@@ -1,5 +1,5 @@
 import React from 'react';
-import RadioButton from '../RadioButton/RadioButtom.jsx'
+import RadioButton from './RadioButtom.jsx'
 
 function Settings(props) {
 

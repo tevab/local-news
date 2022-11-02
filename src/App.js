@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import Header from './Components/Header/Header.jsx'
-import Settings from './Components/Settings/Settings.jsx';
-import MainContainer from './Components/MainContainer/MainContainer.jsx'
-import Footer from './Components/Footer/Footer.jsx'
+import Header from './Components/Header.jsx'
+import Settings from './Components/Settings.jsx';
+import MainContainer from './Components/MainContainer.jsx'
+import Footer from './Components/Footer.jsx'
 
 
 function App() {
