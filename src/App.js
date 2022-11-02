@@ -1,16 +1,11 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import { gapi } from 'gapi-script';
 import Header from './Components/Header.jsx';
 import Settings from './Components/Settings.jsx';
 import MainContainer from './Components/MainContainer.jsx';
 import Footer from './Components/Footer.jsx';
 
-
 function App() {
 
-  const [profile, setProfile] = useState([]);
-  const [signedIn, setSignedIn] = useState();
   const [search, setSearch] = useState('');
   const [weather, setWeather] = useState();
   const [loading, isLoading] = useState(true);
@@ -20,37 +15,6 @@ function App() {
   const [error, setError] = useState('');
 
   const initialLoad = useRef(true);
-
-  useEffect(() => {
-    const initClient = () => {
-          gapi.client.init({
-          clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-          scope: ''
-        });
-     };
-     gapi.load('client:auth2', initClient);
-  });
-
-  useEffect(() => {
-    if (profile.length === 0) {
-      setSignedIn(false);
-    } else {
-      setSignedIn(true);
-    }
-  }, [profile]);
-
-  const onSuccess = (res) => {
-    setProfile(res.profileObj);
-    console.log(res.profileObj);
-  };
-
-  const onFailure = (err) => {
-      console.log('failed', err);
-  };
-
-  const logOut = () => {
-    setProfile([]);
-  };
 
   const handleSearchChange = e => {
     setSearch(e.target.value);
@@ -166,26 +130,6 @@ function App() {
         handleSearchChange={handleSearchChange}
         error={error}
       />
-      {signedIn 
-        ? 
-        <GoogleLogout
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-          buttonText="Log out"
-          onLogoutSuccess={logOut}
-          onFailure={onFailure}
-        />
-        :
-        <GoogleLogin
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-          buttonText="Sign in with Google"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-          cookiePolicy={'single_host_origin'}
-          isSignedIn={true}
-        />
-      } 
-      
-      {profile.name}
       <Settings
         degree={degree}
         setDegrees={setDegrees}
