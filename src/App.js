@@ -1,8 +1,14 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import Unsplash, { toJson } from "unsplash-js";
+import GlobalStyle from './Theme/GlobalStyle.js' 
 import Header from './Components/Header.jsx';
 import Settings from './Components/Settings.jsx';
 import MainContainer from './Components/MainContainer.jsx';
 import Footer from './Components/Footer.jsx';
+
+const unsplash = new Unsplash({
+  accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
+});
 
 function App() {
 
@@ -12,7 +18,9 @@ function App() {
   const [currentLocation, setLocation] = useState('');
   const [degree, setDegrees] = useState('');
   const [temperature, setTemperature] = useState('');
+  const [weatherDescription, setWeatherDescription] = useState('');
   const [error, setError] = useState('');
+  const [bgImage, setBgImage] = useState('');
 
   const initialLoad = useRef(true);
 
@@ -51,6 +59,7 @@ function App() {
       return;
     } else if (currentLocation) {
       getWeather();
+      // setWeatherDescription(weather.weather[0].description);
     }
   }, [currentLocation]);
 
@@ -59,8 +68,24 @@ function App() {
       return;
     } else {
       getTemperature();
+      // if (currentLocation) {
+      //   // setWeatherDescription(weather.weather);
+      //   console.log('degree');
+      // }
     }
   }, [weather, degree]);
+
+  useEffect(() => {
+    if (!loading) {
+      setWeatherDescription(weather.weather[0].description);
+    }
+  }, [weather]);
+  
+  useEffect(() => {
+    if (weatherDescription) {
+      searchPhotos();
+    }
+  }, [weatherDescription]);
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -112,8 +137,29 @@ function App() {
     .catch(error => console.log(error));
   }
 
+  const searchPhotos = async () => {
+    unsplash.search
+    .photos(weatherDescription, 1, 1)
+    .then(toJson)
+    .then((json) => {
+        setBgImage(json.results[0].urls.regular);
+    });
+  };
+  
+  useEffect(() => {
+    
+    if (bgImage) {
+      console.log('test');
+    } else {
+      return;
+    }
+  }, []);
+
   return (
     <>
+      <GlobalStyle
+        bgImage={bgImage}
+      />
       <Header
         loading={loading}
         search={search}
