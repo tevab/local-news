@@ -31,12 +31,13 @@ function Settings(props) {
     }, [profile]);
 
     useEffect(() => {
-        if (signedIn) {
+        if (signedIn && success) {
             addValue();
+            console.log('test');
         } else {
             return;
         }
-    }, [success]);
+    }, [signedIn]);
 
     const onSuccess = (res) => {
         setProfile(res.profileObj);
@@ -58,8 +59,8 @@ function Settings(props) {
         .doc(email)
         .set({
             email: email,
-            degrees: props.degree,
-        })
+            // degrees: props.degree,
+        }, {merge: true})
         // .then(function () {
         //     console.log("Value successfully written!");
         // })
