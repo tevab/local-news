@@ -1,14 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import Unsplash, { toJson } from "unsplash-js";
 import GlobalStyle from './Theme/GlobalStyle.js' 
 import Header from './Components/Header.jsx';
 import Settings from './Components/Settings.jsx';
 import MainContainer from './Components/MainContainer.jsx';
 import Footer from './Components/Footer.jsx';
-
-const unsplash = new Unsplash({
-  accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
-});
 
 function App() {
 
@@ -41,10 +36,10 @@ function App() {
       const klevinToFahrenheit = (kelvin - 273.15) * 1.8 + 32;
       const klevinToCelsius = kelvin - 273.15;
       if (degree === 'Fahrenheit') {
-        let value = (Math.round(klevinToFahrenheit) + 'F');
+        let value = (Math.round(klevinToFahrenheit));
         setTemperature(value);
       } else if (degree === 'Celsius')  {
-        let value = (Math.round(klevinToCelsius) + 'C');
+        let value = (Math.round(klevinToCelsius));
         setTemperature(value);
       }
   };
@@ -145,14 +140,12 @@ function App() {
       setBgImage(response.url);
     }) 
   }
-  // for(let i=0;i<numItemsToGenerate;i++){
-  //   searchPhotos();
-  // }
 
   return (
     <>
       <GlobalStyle
         bgImage={bgImage}
+        loading={loading}
       />
       <Header
         loading={loading}
@@ -160,18 +153,17 @@ function App() {
         handleSearch={handleSearch}
         handleSearchChange={handleSearchChange}
         error={error}
-      />
-      <Settings
         degree={degree}
-        setDegrees={setDegrees}
         weather={weather}
         setTemperature={setTemperature}
         degrees={degrees}
+        setDegrees={setDegrees}
       />
       <MainContainer
         loading={loading}
         weather={weather}
         temperature={temperature}
+        degree={degree}
       />
       <Footer />
     </>
