@@ -84,6 +84,7 @@ function App() {
   useEffect(() => {
     if (weatherDescription) {
       searchPhotos();
+      console.log(weatherDescription);
     }
   }, [weatherDescription]);
 
@@ -137,23 +138,16 @@ function App() {
     .catch(error => console.log(error));
   }
 
-  const searchPhotos = async () => {
-    unsplash.search
-    .photos(weatherDescription, 1, 1)
-    .then(toJson)
-    .then((json) => {
-        setBgImage(json.results[0].urls.regular);
-    });
-  };
-  
-  useEffect(() => {
-    
-    if (bgImage) {
-      console.log('test');
-    } else {
-      return;
-    }
-  }, []);
+  const numItemsToGenerate = 1; 
+
+  function searchPhotos(){
+    fetch(`https://source.unsplash.com/1600x900/?` + weatherDescription).then((response)=> {   
+      setBgImage(response.url);
+    }) 
+  }
+  // for(let i=0;i<numItemsToGenerate;i++){
+  //   searchPhotos();
+  // }
 
   return (
     <>
