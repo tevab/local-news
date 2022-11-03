@@ -85,7 +85,9 @@ function Settings(props) {
 
     const handleDegrees = e => {
         props.setDegrees(e.target.value);
-        updateValue(e.target.value);
+        if (signedIn) {
+            updateValue(e.target.value);
+        };
     };
 
     useEffect(() => {
