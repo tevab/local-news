@@ -15,9 +15,6 @@ const Update = ({ doc }) => {
       .update({
         value: value,
       })
-    //   .then(function () {
-    //     console.log("Document successfully updated!");
-    //   })
       .catch(function (error) {
         console.error("Error updating document: ", error);
       });

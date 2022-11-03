@@ -19,6 +19,12 @@ function Settings(props) {
             });
         };
         gapi.load('client:auth2', initClient);
+
+        props.setDegrees(props.degree)
+
+        if (!props.degree) {
+            props.setDegrees('Fahrenheit');
+        };
     });
     
     useEffect(() => {
@@ -29,15 +35,6 @@ function Settings(props) {
             setEmail(profile.email);
         }
     }, [profile]);
-
-    useEffect(() => {
-        if (signedIn && success) {
-            addValue();
-            console.log('test');
-        } else {
-            return;
-        }
-    }, [signedIn]);
 
     const onSuccess = (res) => {
         setProfile(res.profileObj);
@@ -59,11 +56,7 @@ function Settings(props) {
         .doc(email)
         .set({
             email: email,
-            // degrees: props.degree,
         }, {merge: true})
-        // .then(function () {
-        //     console.log("Value successfully written!");
-        // })
         .catch(function (error) {
             console.error("Error writing Value: ", error);
         });
@@ -76,9 +69,6 @@ function Settings(props) {
             email: email,
             degrees: value,
         })
-        // .then(function () {
-        //     console.log("Document successfully updated!");
-        // })
         .catch(function (error) {
             console.error("Error updating document: ", error);
         });
@@ -98,15 +88,19 @@ function Settings(props) {
             docRef.get().then((doc) => {
                 if (doc.exists) {
                     let data = doc.data().degrees;
-                    console.log(data);
                     props.setDegrees(data);
                 } else {
-                    // doc.data() will be undefined in this case
                     console.log("Error getting document:", error);
                 }
             }).catch((error) => {
                 console.log("Error getting document:", error);
             });
+        }
+
+        if (signedIn && success) {
+            addValue();
+        } else {
+            return;
         }
     }, [signedIn]);
 
