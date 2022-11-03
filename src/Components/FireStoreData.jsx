@@ -1,7 +1,6 @@
 import React from "react";
 import { useGetData } from "../Hooks/useGetData";
 import Update from "./Update";
-import Delete from "./Delete";
 
 const FireStoreData = () => {
   const [documents] = useGetData();
@@ -14,7 +13,6 @@ const FireStoreData = () => {
           <div>
             Document: {documents.id} Value: {documents.value.value}
           </div>
-          <Delete doc={documents.id} />
           <Update doc={documents.id} />
         </div>
       ))}

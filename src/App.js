@@ -7,7 +7,7 @@ import Footer from './Components/Footer.jsx';
 function App() {
 
   const [search, setSearch] = useState('');
-  const [weather, setWeather] = useState();
+  const [weather, setWeather] = useState({});
   const [loading, isLoading] = useState(true);
   const [currentLocation, setLocation] = useState('');
   const [degree, setDegrees] = useState('');
@@ -28,10 +28,6 @@ function App() {
 
   const degrees = ['Fahrenheit', 'Celsius'];
 
-  const handleSettings = e => {
-      setDegrees('Fahrenheit');
-  }
-
   const getTemperature = () => {
       let kelvin = weather?.main?.temp;
       const klevinToFahrenheit = (kelvin - 273.15) * 1.8 + 32;
@@ -47,7 +43,6 @@ function App() {
 
   useEffect(() => {
     getLocation();
-    handleSettings();
   }, []);
 
   useLayoutEffect(() => {

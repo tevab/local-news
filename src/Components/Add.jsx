@@ -14,9 +14,9 @@ const Add = () => {
       .set({
         email: email,
       })
-      .then(function () {
-        console.log("Value successfully written!");
-      })
+    //   .then(function () {
+    //     console.log("Value successfully written!");
+    //   })
       .catch(function (error) {
         console.error("Error writing Value: ", error);
       });

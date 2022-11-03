@@ -1,19 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import RadioButton from './RadioButtom.jsx'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import firebase from "firebase";
-import FireStoreData from './FireStoreData.jsx';
 
 function Settings(props) {
 
     const [profile, setProfile] = useState([]);
     const [signedIn, setSignedIn] = useState();
     const [email, setEmail] = useState('');
+    
+    const initialLoad = useRef(true);
 
     useEffect(() => {
         const initClient = () => {
-                gapi.client.init({
+                gapi.auth2.init({
                 clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
                 scope: ''
             });
@@ -30,17 +31,17 @@ function Settings(props) {
         }
     }, [profile]);
 
-    useEffect(() => {
-        if (signedIn) {
-            addValue();
-        } else {
-            return;
-        }
-    }, [signedIn]);
+    // useEffect(() => {
+    //     if (signedIn) {
+    //         // addValue();
+    //     } else {
+    //         return;
+    //     }
+    // }, [signedIn]);
 
     const onSuccess = (res) => {
         setProfile(res.profileObj);
-        console.log(res.profileObj);
+        // console.log(res.profileObj);
     };
 
     const onFailure = (err) => {
@@ -60,9 +61,9 @@ function Settings(props) {
             email: email,
             degrees: props.degree,
         })
-        .then(function () {
-            console.log("Value successfully written!");
-        })
+        // .then(function () {
+        //     console.log("Value successfully written!");
+        // })
         .catch(function (error) {
             console.error("Error writing Value: ", error);
         });
@@ -75,9 +76,9 @@ function Settings(props) {
             email: email,
             degrees: value,
         })
-        .then(function () {
-            console.log("Document successfully updated!");
-        })
+        // .then(function () {
+        //     console.log("Document successfully updated!");
+        // })
         .catch(function (error) {
             console.error("Error updating document: ", error);
         });
@@ -87,6 +88,25 @@ function Settings(props) {
         props.setDegrees(e.target.value);
         updateValue(e.target.value);
     };
+
+    useEffect(() => {
+        if (signedIn) {
+            const docRef = db.collection("users").doc(email);
+
+            docRef.get().then((doc) => {
+                if (doc.exists) {
+                    let data = doc.data().degrees;
+                    console.log(data);
+                    props.setDegrees(data);
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("Error getting document:", error);
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+        }
+    }, [signedIn]);
 
     return (
         <>
