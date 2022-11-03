@@ -8,9 +8,8 @@ function Settings(props) {
 
     const [profile, setProfile] = useState([]);
     const [signedIn, setSignedIn] = useState();
+    const [success, setSuccess] = useState(false);
     const [email, setEmail] = useState('');
-    
-    const initialLoad = useRef(true);
 
     useEffect(() => {
         const initClient = () => {
@@ -31,17 +30,17 @@ function Settings(props) {
         }
     }, [profile]);
 
-    // useEffect(() => {
-    //     if (signedIn) {
-    //         // addValue();
-    //     } else {
-    //         return;
-    //     }
-    // }, [signedIn]);
+    useEffect(() => {
+        if (signedIn) {
+            addValue();
+        } else {
+            return;
+        }
+    }, [success]);
 
     const onSuccess = (res) => {
         setProfile(res.profileObj);
-        // console.log(res.profileObj);
+        setSuccess(true);
     };
 
     const onFailure = (err) => {
