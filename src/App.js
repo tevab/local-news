@@ -32,10 +32,6 @@ function App() {
       setDegrees('Fahrenheit');
   }
 
-  const handleDegrees = e => {
-      setDegrees(e.target.value);
-  };
-
   const getTemperature = () => {
       let kelvin = weather?.main?.temp;
       const klevinToFahrenheit = (kelvin - 273.15) * 1.8 + 32;
@@ -136,7 +132,6 @@ function App() {
         weather={weather}
         setTemperature={setTemperature}
         degrees={degrees}
-        handleDegrees={handleDegrees}
       />
       <MainContainer
         loading={loading}

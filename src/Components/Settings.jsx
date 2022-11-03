@@ -3,14 +3,13 @@ import RadioButton from './RadioButtom.jsx'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import firebase from "firebase";
-import Add from './Add.jsx';
 import FireStoreData from './FireStoreData.jsx';
 
 function Settings(props) {
 
     const [profile, setProfile] = useState([]);
     const [signedIn, setSignedIn] = useState();
-    const [email, setEmail] = React.useState("");
+    const [email, setEmail] = useState('');
 
     useEffect(() => {
         const initClient = () => {
@@ -52,10 +51,6 @@ function Settings(props) {
         setProfile([]);
     };
 
-    // useEffect(() => {
-    //     
-    // }, [onSuccess])
-
     const db = firebase.firestore();
 
     const addValue = () => {
@@ -63,6 +58,7 @@ function Settings(props) {
         .doc(email)
         .set({
             email: email,
+            degrees: props.degree,
         })
         .then(function () {
             console.log("Value successfully written!");
@@ -70,6 +66,26 @@ function Settings(props) {
         .catch(function (error) {
             console.error("Error writing Value: ", error);
         });
+    };
+
+    const updateValue = (value) => {
+        db.collection("users")
+        .doc(email)
+        .update({
+            email: email,
+            degrees: value,
+        })
+        .then(function () {
+            console.log("Document successfully updated!");
+        })
+        .catch(function (error) {
+            console.error("Error updating document: ", error);
+        });
+    };
+
+    const handleDegrees = e => {
+        props.setDegrees(e.target.value);
+        updateValue(e.target.value);
     };
 
     return (
@@ -101,17 +117,13 @@ function Settings(props) {
                             key={i}
                             id='degrees'
                             value={degree}
-                            handleClick={props.handleDegrees}
+                            handleClick={handleDegrees}
                             buttonState={props.degree}
                         />
                     )
                 )
             }
-            {/* <input onBlur={getValue} type='text' /> */}
-            <button type='button' onClick={addValue}>
-                Add
-            </button>
-            <FireStoreData />
+            {/* <FireStoreData /> */}
         </>
     )
 }
