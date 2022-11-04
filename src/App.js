@@ -19,6 +19,8 @@ function App() {
   const [degree, setDegrees] = useState('');
   const [temperature, setTemperature] = useState('');
   const [weatherDescription, setWeatherDescription] = useState('');
+  const [currentTime, setCurrentTime] = useState('');
+  const [timeOfDay, setTimeOfDay] = useState('');
   const [error, setError] = useState('');
   const [bgImage, setBgImage] = useState('');
 
@@ -90,6 +92,18 @@ function App() {
     }
   }, [latitude]);
 
+  useEffect(() => {
+    if (currentTime >= 5 && currentTime < 12) {
+      setTimeOfDay('morning');
+    } else if (currentTime >= 12 && currentTime < 16) {
+      setTimeOfDay('afternoon');
+    } else if (currentTime >= 16 && currentTime < 21) {
+      setTimeOfDay('evening');
+    } else {
+      setTimeOfDay('night');
+    };
+  }, [currentTime])
+
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showCity);
@@ -149,7 +163,7 @@ function App() {
   const numItemsToGenerate = 1; 
 
   function searchPhotos(){
-    fetch(`https://source.unsplash.com/1600x900/?` + weatherDescription).then((response)=> {   
+    fetch(`https://source.unsplash.com/1600x900/?` + weatherDescription + ' ' + timeOfDay).then((response)=> {   
       setBgImage(response.url);
     }) 
   }
@@ -181,6 +195,7 @@ function App() {
         currentState={currentState}
         currentCity={currentCity}
         timezone={timezone}
+        setCurrentTime={setCurrentTime}
       />
       <Footer />
     </>
