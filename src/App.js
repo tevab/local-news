@@ -1,16 +1,21 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import GlobalStyle from './Theme/GlobalStyle.js' 
 import Header from './Components/Header.jsx';
-import Settings from './Components/Settings.jsx';
 import MainContainer from './Components/MainContainer.jsx';
 import Footer from './Components/Footer.jsx';
+import moment from 'moment-timezone';
 
 function App() {
 
   const [search, setSearch] = useState('');
   const [weather, setWeather] = useState({});
   const [loading, isLoading] = useState(true);
-  const [currentLocation, setLocation] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongtitude] = useState('');
+  const [currentCity, setCity] = useState('');
+  const [currentState, setState] = useState('');
+  const [currentCountry, setCountry] = useState('');
+  const [timezone, setTimezone] = useState('');
   const [degree, setDegrees] = useState('');
   const [temperature, setTemperature] = useState('');
   const [weatherDescription, setWeatherDescription] = useState('');
@@ -52,36 +57,38 @@ function App() {
     if (initialLoad.current) {
       initialLoad.current = false
       return;
-    } else if (currentLocation) {
+    } else if (currentCity) {
       getWeather();
-      // setWeatherDescription(weather.weather[0].description);
     }
-  }, [currentLocation]);
+  }, [currentCity]);
 
   useEffect(() => {
     if (!weather) {
       return;
     } else {
       getTemperature();
-      // if (currentLocation) {
-      //   // setWeatherDescription(weather.weather);
-      //   console.log('degree');
-      // }
     }
   }, [weather, degree]);
 
   useEffect(() => {
     if (!loading) {
       setWeatherDescription(weather.weather[0].description);
+      setLatitude(weather.coord.lat);
+      setLongtitude(weather.coord.lon); 
     }
   }, [weather]);
   
   useEffect(() => {
     if (weatherDescription) {
       searchPhotos();
-      console.log(weatherDescription);
     }
   }, [weatherDescription]);
+
+  useEffect(() => {
+    if (latitude) {
+      showCity();
+    }
+  }, [latitude]);
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -96,7 +103,7 @@ function App() {
       method: 'GET',
     };
 
-    fetch(`${process.env.REACT_APP_LOCATION_BASE}lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json&apiKey=${process.env.REACT_APP_LOCATION_API_KEY}`, requestOptions)
+    fetch(`${process.env.REACT_APP_LOCATION_BASE}lat=${latitude || position.coords.latitude}&lon=${longitude || position.coords.longitude}&format=json&apiKey=${process.env.REACT_APP_LOCATION_API_KEY}`, requestOptions)
     .then(response => {
       if (response.ok) {
         setError('');
@@ -108,15 +115,21 @@ function App() {
       }
     })
     .then(data => {
-      setSearch(data.results[0].city);
-      setLocation(data.results[0].city);
+      let locationCity = data.results[0].city;
+      let locationState = data.results[0].state;
+      let locationCountry = data.results[0].country;
+      setSearch(locationCity + ', ' + locationState + ', ' + locationCountry);
+      setCity(data.results[0].city);
+      setState(data.results[0].state);
+      setCountry(data.results[0].country);
+      setTimezone(data.results[0].timezone.abbreviation_STD);
       isLoading(false);
     })
     .catch(error => console.log(error));
   }
 
   const getWeather = () => {
-    fetch(`${process.env.REACT_APP_WEATHER_BASE}weather?q=${search || currentLocation}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`)
+    fetch(`${process.env.REACT_APP_WEATHER_BASE}weather?q=${search || currentCity}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`)
     .then(response => {
       if (response.ok) {
         setError('');
@@ -128,7 +141,7 @@ function App() {
       }
     })
     .then(data => {
-      setWeather(data);
+      setWeather(data); 
     })
     .catch(error => console.log(error));
   }
@@ -164,6 +177,9 @@ function App() {
         weather={weather}
         temperature={temperature}
         degree={degree}
+        currentCountry={currentCountry}
+        currentState={currentState}
+        currentCity={currentCity}
       />
       <Footer />
     </>

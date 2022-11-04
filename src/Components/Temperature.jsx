@@ -3,11 +3,14 @@ import React from "react";
 class Temperature extends React.Component {
     render() {
         return (
-            <div style={{
-                display: 'flex',
-                alignContent: 'flex-end',
-                alignItems: 'flex-end',
-            }}>
+            <div 
+                style={{
+                    display: 'flex',
+                    alignContent: 'flex-end',
+                    alignItems: 'flex-end',
+                }}
+                className={this.props.className}
+            >
                 {this.props.temperature} 
                 <div 
                     style={{

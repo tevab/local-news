@@ -2,8 +2,23 @@ import React from 'react';
 import Lottie from 'lottie-react';
 import loader from '../Animations/loader.json';
 import Temperature from './Temperature';
+import Time from './Time';
+import styled from 'styled-components';
 
-function MainContainer(props) {
+const StyledTemperature = styled(Temperature)`
+  color: #f5f5f5;
+  font-size: 110px;
+  letter-spacing: -10px;
+  text-shadow: 0px 4px 4px rgb(30 18 18 / 52%);
+`;
+
+const StyledTime = styled(Time)`
+  font-size: 22px;
+  color: #f5f5f5;
+  text-shadow: 0px 4px 4px rgb(30 18 18 / 52%);
+`;
+
+function MainContainer(props, {className}) {
 
   return (
     <div 
@@ -15,9 +30,6 @@ function MainContainer(props) {
         justifyContent: 'center',
         alignItems: 'center',
         fontFamily: `'Varela Round', Arial, sans-serif`,
-        color: '#fff',
-        fontSize: 110,
-        letterSpacing: -10,
       }}>
       {props.loading 
         ? 
@@ -29,10 +41,22 @@ function MainContainer(props) {
           }}  
         />
         : 
-        <Temperature 
-          temperature={props.temperature} 
-          degree={props.degree}
-        />
+        (
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+            <StyledTemperature 
+              temperature={props.temperature} 
+              degree={props.degree}
+            />
+            <StyledTime
+              currentCountry={props.currentCountry}
+              currentCity={props.currentCity}
+            />
+          </div>
+        )
       }
     </div>
   )
