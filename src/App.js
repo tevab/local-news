@@ -122,7 +122,7 @@ function App() {
       setCity(data.results[0].city);
       setState(data.results[0].state);
       setCountry(data.results[0].country);
-      setTimezone(data.results[0].timezone.abbreviation_STD);
+      setTimezone(data.results[0].timezone.name);
       isLoading(false);
     })
     .catch(error => console.log(error));
@@ -180,6 +180,7 @@ function App() {
         currentCountry={currentCountry}
         currentState={currentState}
         currentCity={currentCity}
+        timezone={timezone}
       />
       <Footer />
     </>

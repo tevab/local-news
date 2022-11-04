@@ -3,11 +3,15 @@ import moment from "moment";
 
 function Time(props) {
 
+    useEffect(() => {
+        const showTime = setInterval(() => {
+            document.getElementById("time").innerHTML = moment().tz(props.timezone).format("dddd MM/DD/yyyy h:mm A");
+        }, 1000);
+        return () => clearInterval(showTime);
+      }, [props.timezone]);
+
     return(
-        <div className={props.className}>
-            {/* {currentDate} */}
-            {/* {date.toLocaleDateString()} {date.toLocaleTimeString()} */}
-        </div>
+        <div className={props.className} id='time'></div>
     )
 }
 

@@ -54,6 +54,7 @@ function MainContainer(props, {className}) {
             <StyledTime
               currentCountry={props.currentCountry}
               currentCity={props.currentCity}
+              timezone={props.timezone}
             />
           </div>
         )
