@@ -24,6 +24,8 @@ class Header extends React.Component {
           weather={this.props.weather}
           setTemperature={this.props.setTemperature}
           degrees={this.props.degrees}
+          profile={this.props.profile}
+          setProfile={this.props.setProfile}
         />
       </div>
     )

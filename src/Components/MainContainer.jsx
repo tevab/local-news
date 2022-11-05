@@ -47,6 +47,9 @@ function MainContainer(props, {className}) {
             flexDirection: 'column',
             alignItems: 'center',
           }}>
+            {props.profile.length > 0 && (
+              `Hi ${props.profile.name}!`
+            )}
             <StyledTemperature 
               temperature={props.temperature} 
               degree={props.degree}

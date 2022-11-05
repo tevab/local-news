@@ -6,7 +6,6 @@ import firebase from "firebase";
 
 function Settings(props) {
 
-    const [profile, setProfile] = useState([]);
     const [signedIn, setSignedIn] = useState();
     const [success, setSuccess] = useState(false);
     const [email, setEmail] = useState('');
@@ -28,16 +27,16 @@ function Settings(props) {
     });
     
     useEffect(() => {
-        if (profile.length === 0) {
+        if (props.profile.length === 0) {
             setSignedIn(false);
         } else {
             setSignedIn(true);
-            setEmail(profile.email);
+            setEmail(props.profile.email);
         }
-    }, [profile]);
+    }, [props.profile]);
 
     const onSuccess = (res) => {
-        setProfile(res.profileObj);
+        props.setProfile(res.profileObj);
         setSuccess(true);
     };
 
@@ -46,7 +45,7 @@ function Settings(props) {
     };
 
     const logOut = () => {
-        setProfile([]);
+        props.setProfile([]);
     };
 
     const db = firebase.firestore();
@@ -125,7 +124,7 @@ function Settings(props) {
                 />
             } 
             
-            {profile.name}
+            {props.profile.name}
             {
                 props.degrees.map(
                     (degree, i) => (

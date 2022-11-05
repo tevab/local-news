@@ -4,6 +4,7 @@ import Header from './Components/Header.jsx';
 import MainContainer from './Components/MainContainer.jsx';
 import Footer from './Components/Footer.jsx';
 import moment from 'moment-timezone';
+import CrossFade from './Components/CrossFade.jsx';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
   const [timeOfDay, setTimeOfDay] = useState('');
   const [error, setError] = useState('');
   const [bgImage, setBgImage] = useState('');
+  const [profile, setProfile] = useState([]);
 
   const initialLoad = useRef(true);
 
@@ -160,8 +162,6 @@ function App() {
     .catch(error => console.log(error));
   }
 
-  const numItemsToGenerate = 1; 
-
   function searchPhotos(){
     fetch(`https://source.unsplash.com/1600x900/?` + weatherDescription + ' ' + timeOfDay).then((response)=> {   
       setBgImage(response.url);
@@ -171,8 +171,11 @@ function App() {
   return (
     <>
       <GlobalStyle
-        bgImage={bgImage}
         loading={loading}
+      />
+      <CrossFade
+        weatherDescription={weatherDescription}
+        timeOfDay={timeOfDay}
       />
       <Header
         loading={loading}
@@ -185,6 +188,8 @@ function App() {
         setTemperature={setTemperature}
         degrees={degrees}
         setDegrees={setDegrees}
+        profile={profile}
+        setProfile={setProfile}
       />
       <MainContainer
         loading={loading}
@@ -196,6 +201,7 @@ function App() {
         currentCity={currentCity}
         timezone={timezone}
         setCurrentTime={setCurrentTime}
+        profile={profile}
       />
       <Footer />
     </>
