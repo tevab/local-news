@@ -8,6 +8,7 @@ class Temperature extends React.Component {
                     display: 'flex',
                     alignContent: 'flex-end',
                     alignItems: 'flex-end',
+                    ...this.props.style
                 }}
                 className={this.props.className}
             >

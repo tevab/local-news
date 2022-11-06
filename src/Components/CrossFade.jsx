@@ -18,7 +18,7 @@ function CrossFade(props) {
     const [imageTwoFade, setImageTwoFade] = useState(false);
 
     const searchPhotos = () => {
-        fetch(`https://source.unsplash.com/1600x900/?` + props.weatherDescription + ' ' + props.timeOfDay + ' sky')
+        fetch(`https://source.unsplash.com/1600x900/?` + props.weatherDescription + ' ' + props.timeOfDay)
         .then((response)=> {   
             if (!imageOne) {
                 setImageOne(response.url);
@@ -37,8 +37,9 @@ function CrossFade(props) {
     useEffect(() => {
         if (props.weatherDescription|| props.timeOfDay) {
             searchPhotos();
+            console.log(props.weatherDescription + ' ' + props.timeOfDay);
         }
-    }, [props.weatherDescription, props.timeOfDay]);
+    }, [props.weatherDescription && props.timeOfDay]);
 
     return (
         <>

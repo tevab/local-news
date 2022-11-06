@@ -2,17 +2,20 @@ import React from 'react';
 
 function Search(props) {
 
-  const handleBlur = () => {
+  const handleFocus = () => {
     props.setSearch('');
   }
 
   return (
-    <input type='text'
-      onChange={props.handleSearchChange}
-      onKeyDown={props.handleSearch}
-      onFocus={handleBlur}
-      value={props.loading ? 'Loading...' : props.search}
-    />
+    <>
+        <input type='text' id='search'
+          onChange={props.handleSearchChange}
+          onKeyDown={props.handleSearch}
+          onFocus={handleFocus}
+          value={props.loading ? 'Loading...' : props.search}
+        />
+        {props.error}
+    </>
   );
 };
 

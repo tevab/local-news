@@ -34,6 +34,8 @@ function App() {
   const handleSearch = e => {
     if (e.keyCode === 13) {
       getWeather();
+
+      document.getElementById('search').blur();
     }
   };
 
@@ -74,7 +76,7 @@ function App() {
   }, [weather, degree]);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && weather) {
       setWeatherDescription(weather.weather[0].description);
       setLatitude(weather.coord.lat);
       setLongtitude(weather.coord.lon); 
@@ -90,9 +92,9 @@ function App() {
   useEffect(() => {
     if (currentTime >= 5 && currentTime < 12) {
       setTimeOfDay('morning');
-    } else if (currentTime >= 12 && currentTime < 16) {
+    } else if (currentTime >= 12 && currentTime < 17) {
       setTimeOfDay('afternoon');
-    } else if (currentTime >= 16 && currentTime < 21) {
+    } else if (currentTime >= 17 && currentTime < 21) {
       setTimeOfDay('evening');
     } else if ((currentTime >= 21 && currentTime < 24) || (currentTime >= 0 && currentTime < 5)) {
       setTimeOfDay('night');
@@ -146,7 +148,7 @@ function App() {
         setError('');
         return response.json()
       } else if (response.status === 404) {
-        setError('Invalid query')
+        setError('Could not find location');
       } else {
         setError('Error ' + response.status)
       }
@@ -154,7 +156,7 @@ function App() {
     .then(data => {
       setWeather(data); 
     })
-    .catch(error => console.log(error));
+    .catch(error => setError(error));
   }
 
   return (
@@ -180,6 +182,13 @@ function App() {
         setDegrees={setDegrees}
         profile={profile}
         setProfile={setProfile}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1,
+        }}
       />
       <MainContainer
         loading={loading}
@@ -196,7 +205,14 @@ function App() {
         currentTime={currentTime}
         timeOfDay={timeOfDay}
       />
-      <Footer />
+      <Footer
+        style={{
+          color: '#f5f5f5',
+          textShadow: '0px 4px 4px rgb(30 18 18 / 52%)',
+          fontSize: 12,
+          margin: 20,
+        }}
+      />
     </>
   );
 }

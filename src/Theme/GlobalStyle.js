@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     margin: 0;
     position: relative;
+    font-family: 'Varela Round', Arial, sans-serif;
     &:before {
       content: '';
       position: absolute;
