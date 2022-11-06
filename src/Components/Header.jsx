@@ -13,6 +13,7 @@ class Header extends React.Component {
       <div style={{flex: `0 1 auto`}}>
         <StyledSearch 
           loading={this.props.loading}
+          setSearch={this.props.setSearch}
           search={this.props.search}
           handleSearchChange={this.props.handleSearchChange}
           handleSearch={this.props.handleSearch}

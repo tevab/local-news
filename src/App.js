@@ -34,7 +34,7 @@ function App() {
   const handleSearch = e => {
     if (e.keyCode === 13) {
       getWeather();
-    };
+    }
   };
 
   const degrees = ['Fahrenheit', 'Celsius'];
@@ -168,6 +168,7 @@ function App() {
       />
       <Header
         loading={loading}
+        setSearch={setSearch}
         search={search}
         handleSearch={handleSearch}
         handleSearchChange={handleSearchChange}

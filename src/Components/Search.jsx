@@ -1,17 +1,19 @@
 import React from 'react';
 
-class Search extends React.Component {
-  render() {
-    return (
-      <>
-        <input type='text'
-          onChange={this.props.handleSearchChange}
-          onKeyDown={this.props.handleSearch}
-          value={this.props.loading ? 'Loading...' : this.props.search}
-        />
-      </>
-    )
+function Search(props) {
+
+  const handleBlur = () => {
+    props.setSearch('');
   }
-}
+
+  return (
+    <input type='text'
+      onChange={props.handleSearchChange}
+      onKeyDown={props.handleSearch}
+      onFocus={handleBlur}
+      value={props.loading ? 'Loading...' : props.search}
+    />
+  );
+};
 
 export default Search;
