@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 
-const BackgroundImage = styled.img`
+const BackgroundImage = styled.div`
     position: absolute;
     z-index: -2;
-    object-fit: cover;
-    transition: all 400ms ease-in-out;
+    background-size: cover;
+    transition: opacity 400ms ease-in-out;
+    height: 100vh;
+    width: 100vw;
 `;
 
 function CrossFade(props) {
@@ -15,52 +17,43 @@ function CrossFade(props) {
     const [imageTwo, setImageTwo] = useState('');
     const [imageTwoFade, setImageTwoFade] = useState(false);
 
-    function searchPhotos(){
-        fetch(`https://source.unsplash.com/1600x900/?` + props.weatherDescription + ' ' + props.timeOfDay)
+    const searchPhotos = () => {
+        fetch(`https://source.unsplash.com/1600x900/?` + props.weatherDescription + ' ' + props.timeOfDay + ' sky')
         .then((response)=> {   
             if (!imageOne) {
                 setImageOne(response.url);
                 setImageOneFade(false);
                 setImageTwoFade(true);
-                setTimeout(() => {
-                    setImageTwo('');
-                }, '1000');
-            } else {
+                setImageTwo('');
+            } else if (!imageTwo) {
                 setImageTwo(response.url);
                 setImageTwoFade(false);
                 setImageOneFade(true);
-                setTimeout(() => {
-                    setImageOne('');
-                }, '1000');
+                setImageOne('');
             }
         }) 
     }
 
     useEffect(() => {
-        searchPhotos()
-    }, []);
-
-    useEffect(() => {
-        if (props.weatherDescription && props.timeOfDay) {
+        if (props.weatherDescription|| props.timeOfDay) {
             searchPhotos();
-        } else {
-            return;
         }
-    }, [props.timeOfDay]);
+    }, [props.weatherDescription, props.timeOfDay]);
 
     return (
         <>
             <BackgroundImage
-                src={imageOne} 
+                imageOneFade={imageOneFade}
                 style={{
                     opacity: imageOneFade ? 0 : 1,
+                    backgroundImage: `url(${imageOne})`,
                 }}
             />
             <BackgroundImage 
-                src={imageTwo} 
                 imageTwoFade={imageTwoFade} 
                 style={{
                     opacity: imageTwoFade ? 0 : 1,
+                    backgroundImage: `url(${imageTwo})`,
                 }}
             />
         </>

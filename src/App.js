@@ -23,7 +23,6 @@ function App() {
   const [currentTime, setCurrentTime] = useState('');
   const [timeOfDay, setTimeOfDay] = useState('');
   const [error, setError] = useState('');
-  const [bgImage, setBgImage] = useState('');
   const [profile, setProfile] = useState([]);
 
   const initialLoad = useRef(true);
@@ -81,12 +80,6 @@ function App() {
       setLongtitude(weather.coord.lon); 
     }
   }, [weather]);
-  
-  useEffect(() => {
-    if (weatherDescription) {
-      searchPhotos();
-    }
-  }, [weatherDescription]);
 
   useEffect(() => {
     if (latitude) {
@@ -101,10 +94,12 @@ function App() {
       setTimeOfDay('afternoon');
     } else if (currentTime >= 16 && currentTime < 21) {
       setTimeOfDay('evening');
-    } else {
+    } else if ((currentTime >= 21 && currentTime < 24) || (currentTime >= 0 && currentTime < 5)) {
       setTimeOfDay('night');
-    };
-  }, [currentTime])
+    } else {
+      return;
+    }
+  })
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -162,12 +157,6 @@ function App() {
     .catch(error => console.log(error));
   }
 
-  function searchPhotos(){
-    fetch(`https://source.unsplash.com/1600x900/?` + weatherDescription + ' ' + timeOfDay).then((response)=> {   
-      setBgImage(response.url);
-    }) 
-  }
-
   return (
     <>
       <GlobalStyle
@@ -202,6 +191,9 @@ function App() {
         timezone={timezone}
         setCurrentTime={setCurrentTime}
         profile={profile}
+        weatherDescription={weatherDescription}
+        currentTime={currentTime}
+        timeOfDay={timeOfDay}
       />
       <Footer />
     </>

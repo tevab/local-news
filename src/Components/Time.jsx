@@ -12,7 +12,10 @@ function Time(props) {
       }, [props.timezone]);
 
     return(
+        <div style={{color: '#fff'}}>
         <div className={props.className} id='time'></div>
+        {props.weatherDescription}, {props.currentTime}, {props.timeOfDay}
+        </div>
     )
 }
 

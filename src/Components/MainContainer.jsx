@@ -59,6 +59,9 @@ function MainContainer(props, {className}) {
               currentCity={props.currentCity}
               timezone={props.timezone}
               setCurrentTime={props.setCurrentTime}
+              weatherDescription={props.weatherDescription}
+              currentTime={props.currentTime}
+              timeOfDay={props.timeOfDay}
             />
           </div>
         )
