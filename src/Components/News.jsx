@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {Carousel} from 'react-responsive-carousel';
 
 function News(props) {
 
@@ -16,6 +18,9 @@ function News(props) {
           setLocalNews(data);
         })
         .then(() => {
+            setNewsLoaded(false);
+        })
+        .then(() => {
             setNewsLoaded(true);
         })
         .catch(error => console.log(error));
@@ -29,17 +34,23 @@ function News(props) {
         }
     }, [props.currentCity]);
 
-
     return (
         <>
             {newsLoaded && (
-                <>
+                <Carousel 
+                    autoPlay={true} 
+                    interval={2000} 
+                    showArrows={false}
+                    showIndicators={false}
+                    showStatus={false}
+                    showThumbs={false}
+                >
                     {localNews.articles.map(
                         (news, i) => (
                             <div key={i}>{news.title}</div>
                         )
                     )}
-                </>
+                </Carousel>
             )}
         </>
     );
