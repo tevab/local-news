@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {Carousel} from 'react-responsive-carousel';
+import moment from "moment";
 
 function News(props) {
 
@@ -35,24 +36,42 @@ function News(props) {
     }, [props.currentCity]);
 
     return (
-        <>
+        <div
+            style={{
+                zIndex: 1,
+            }}
+        >
             {newsLoaded && (
-                <Carousel 
-                    autoPlay={true} 
-                    interval={2000} 
-                    showArrows={false}
-                    showIndicators={false}
-                    showStatus={false}
-                    showThumbs={false}
-                >
-                    {localNews.articles.map(
-                        (news, i) => (
-                            <div key={i}>{news.title}</div>
-                        )
-                    )}
-                </Carousel>
+                <>
+                    Some good news
+                    <Carousel 
+                        autoPlay={true} 
+                        interval={6000} 
+                        showArrows={false}
+                        showIndicators={false}
+                        showStatus={false}
+                        showThumbs={false}
+                        infiniteLoop={true}
+                        stopOnHover={false}
+                        swipeable={false}
+                        animationHandler={'fade'}
+                    >
+                        {localNews.articles.map(
+                            (news, i) => (
+                                <div 
+                                    key={i} 
+                                    style={{
+                                        padding: 20,
+                                    }}
+                                >
+                                    <a href={news.url} target='_blank'><span className="news-date">{moment(news.publishedAt).format("MMM DD yy")}</span> {news.title}</a>
+                                </div>
+                            )
+                        )}
+                    </Carousel>
+                </>
             )}
-        </>
+        </div>
     );
 };
 
