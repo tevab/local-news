@@ -3,6 +3,7 @@ import Lottie from 'lottie-react';
 import loader from '../Animations/loader.json';
 import Temperature from './Temperature';
 import Time from './Time';
+import News from './News';
 
 const Greeting = (props) => {
   return (
@@ -86,6 +87,9 @@ function MainContainer(props) {
                 fontSize: 22,
                 height: 26,
               }}
+            />
+            <News
+               currentCity={props.currentCity}
             />
           </div>
         )
