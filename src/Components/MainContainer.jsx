@@ -3,6 +3,7 @@ import Lottie from 'lottie-react';
 import loader from '../Animations/loader.json';
 import Temperature from './Temperature';
 import Time from './Time';
+import News from './News';
 import PropTypes from 'prop-types';
 
 const Greeting = (props) => {
@@ -85,9 +86,10 @@ function MainContainer (props) {
 								height: 26
 							}}
 						/>
-						{/* <News
-               currentCity={props.currentCity}
-            /> */}
+						<News
+							currentCity={props.currentCity}
+							timeOfDay={props.timeOfDay}
+						/>
 					</div>
 				)
 			}

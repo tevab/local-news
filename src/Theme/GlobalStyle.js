@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
       z-index: -1;
       mix-blend-mode: multiply;
       transition: all 400ms ease-in-out;
-      background-color: ${props => props.loading? 'transparent' : '#9f9191c7'};
+      background-color: ${props => props.loading? 'transparent' : '#7b6767'};
     }
   }
   #root {
