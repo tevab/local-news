@@ -1,4 +1,4 @@
-A fun experiment with multiple APIs, Firebase, and Google Login.
+A fun experiment with multiple APIs, Firebase, and Google Login.<br>
 This is a browser homepage that detects the user's location, then shows the local weather, a background image that references the weather, local time, a custom gretting, and 6 local "good news". The users can log in using their Google account and change their page preferences, which will automatically be saved on the Firestore DB under their email.
 
 The APIs used for this experiment are:
