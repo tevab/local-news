@@ -4,6 +4,7 @@ import loader from '../Animations/loader.json';
 import Temperature from './Temperature';
 import Time from './Time';
 import News from './News';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Greeting = (props) => {
@@ -18,6 +19,13 @@ const Greeting = (props) => {
 		</div>
 	);
 };
+
+const StyledTime = styled(Time)`
+	font-size: 22px;
+	@media (max-width: 550px) {
+		font-size: 14px;
+	}
+`;
 
 function MainContainer (props) {
 	const [showGreeting, setShowGreeting] = useState(false);
@@ -46,7 +54,8 @@ function MainContainer (props) {
 				alignItems: 'center',
 				color: '#f5f5f5',
 				textShadow: '0px 4px 4px rgb(30 18 18 / 52%)',
-				marginTop: -20
+				marginTop: -20,
+				padding: 20,
 			}}>
 			{props.loading
 				? <Lottie
@@ -73,7 +82,7 @@ function MainContainer (props) {
 								margin: '6px auto'
 							}}
 						/>
-						<Time
+						<StyledTime
 							currentCountry={props.currentCountry}
 							currentCity={props.currentCity}
 							timezone={props.timezone}
@@ -81,10 +90,6 @@ function MainContainer (props) {
 							weatherDescription={props.weatherDescription}
 							currentTime={props.currentTime}
 							timeOfDay={props.timeOfDay}
-							style={{
-								fontSize: 22,
-								height: 26
-							}}
 						/>
 						<News
 							currentCity={props.currentCity}

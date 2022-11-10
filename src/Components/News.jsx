@@ -16,7 +16,7 @@ function News (props) {
 	const [verb, setVerb] = useState('');
 
 	const getNews = () => {
-		fetch(`${process.env.REACT_APP_NEWS_BASE}everything?q=${props.currentCity} Good&language=en&sortBy=publishedA&pageSize=6&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`)
+		fetch(`${process.env.REACT_APP_NEWS_BASE}everything?q=${props.currentCity} Fun Good Happy&language=en&sortBy=publishedA&pageSize=6&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`)
 			.then(response => {
 				if (response.ok) {
 					return response.json();
@@ -67,7 +67,7 @@ function News (props) {
 					textAlign: 'center',
 				}}
 			>
-				Some good news to {verb} your day in a positive way:
+				Some fun news to {verb} your day in a positive way:
 			</h1>
 			{newsLoaded && (
 				<Carousel

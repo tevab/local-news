@@ -59,6 +59,7 @@ function Search(props) {
 					color: '#f5f5f5',
 					fontSize: 18,
 					letterSpacing: 0.4,
+					textOverflow: 'ellipsis',
 				}}
 			/>
 			<div
