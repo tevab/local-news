@@ -28,7 +28,7 @@ function MainContainer (props) {
 			setTimeout(() => {
 				setProfileName('');
 			}, 400);
-		} else {
+		} else if (props.profile.givenName) {
 			setShowGreeting(true);
 			setProfileName(props.profile.givenName);
 		}
