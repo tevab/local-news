@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const SearchWrapper = styled.div`
 	background-color: #232028;
 	border-radius: 8px;
-	padding: 10px;
+	padding: 10px 10px 10px 6px;
 	width: 100%;
 	max-width: 400px;
 	box-shadow: rgb(32 18 55 / 32%) 0px 4px 4px;

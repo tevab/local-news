@@ -15,7 +15,7 @@ const Greeting = (props) => {
 				transition: 'opacity 400ms ease-in-out'
 			}}
 		>
-      Good {props.timeOfDay}, {props.profileName}!
+			Good {props.timeOfDay}, {props.profileName}!
 		</div>
 	);
 };
@@ -71,7 +71,7 @@ function MainContainer (props) {
 						flexDirection: 'column',
 						alignItems: 'center'
 					}}>
-						<Greeting showGreeting={showGreeting} timeOfDay={props.timeOfDay} profileName={profileName} />
+						{props.profile.givenName ? <Greeting showGreeting={showGreeting} timeOfDay={props.timeOfDay} profileName={profileName} /> : null}
 						<Temperature
 							temperature={props.temperature}
 							degree={props.degree}
