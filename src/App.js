@@ -4,6 +4,32 @@ import Header from './Components/Header.jsx';
 import MainContainer from './Components/MainContainer.jsx';
 import Footer from './Components/Footer.jsx';
 import CrossFade from './Components/CrossFade.jsx';
+import Settings from './Components/Settings.jsx';
+import styled from 'styled-components';
+
+const StyledHeader = styled(Header)`
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	padding: 20px;
+	flex: 0 1 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+const StyledSettings = styled(Settings)`
+	position: fixed;
+	top: 20px;
+	left: 16px;
+	z-index: 1;
+	@media (max-width: 760px) {
+		top: auto;
+		bottom: 40px;
+	}
+`;
 
 function App() {
 	const [query, setQuery] = useState('');
@@ -169,7 +195,7 @@ function App() {
 				timeOfDay={timeOfDay}
 				currentCity={currentCity}
 			/>
-			<Header
+			<StyledHeader
 				loading={loading}
 				setSearch={setSearch}
 				search={search}
@@ -184,18 +210,15 @@ function App() {
 				profile={profile}
 				setProfile={setProfile}
 				query={query}
-				style={{
-					position: 'fixed',
-					top: 0,
-					left: 0,
-					right: 0,
-					zIndex: 1,
-					padding: 20,
-					flex: '0 1 auto',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}
+			/>
+			<StyledSettings
+				degree={degree}
+				setDegrees={setDegrees}
+				weather={weather}
+				setTemperature={setTemperature}
+				degrees={degrees}
+				profile={profile}
+				setProfile={setProfile}
 			/>
 			<MainContainer
 				loading={loading}
@@ -218,6 +241,7 @@ function App() {
 					textShadow: '0px 4px 4px rgb(30 18 18 / 52%)',
 					fontSize: 12,
 					margin: 20,
+					textAlign: 'center',
 				}}
 			/>
 		</>

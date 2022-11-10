@@ -1,5 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
+
+const SearchWrapper = styled.div`
+	background-color: #232028;
+	border-radius: 8px;
+	padding: 10px;
+	width: 100%;
+	max-width: 400px;
+	box-shadow: rgb(32 18 55 / 32%) 0px 4px 4px;
+	transition: all 200ms ease-in-out;
+	&:hover {
+		background-color: #36323f;
+	}
+	@media (max-width: 760px) {
+		max-width: 80%;
+	}
+`;
 
 Search.propType = {
 	search: PropTypes.string.isRequired,
@@ -23,16 +40,7 @@ function Search(props) {
 	};
 
 	return (
-		<div
-			style={{
-				backgroundColor: '#36323d',
-				borderRadius: 8,
-				padding: 10,
-				width: '100%',
-				maxWidth: 400,
-				boxShadow: 'rgb(85 72 107 / 32%) 0px 4px 4px',
-			}}
-		>
+		<SearchWrapper>
 			<input
 				type='text'
 				id='search'
@@ -67,7 +75,7 @@ function Search(props) {
 			>
 				{props.error}
 			</div>
-		</div>
+		</SearchWrapper>
 	);
 }
 

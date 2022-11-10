@@ -7,10 +7,22 @@ import styled from 'styled-components';
 import SettingsIcon from '../Icons/SettingsIcon.jsx';
 import PropTypes from 'prop-types';
 
-const Navbar = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+const StyledAvatar = styled.img`
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	margin-right: 10px;
+`;
+
+const StyledSettingsIcon = styled(SettingsIcon)`
+	width: 36px;
+	height: 36px;
+	padding-top: 8px;
+	cursor: pointer;
+	transition: all 1000ms ease-in-out;
+	transform: ${props => props.collapseSettings ? 'rotate(359deg)' : null};
+	margin-right: 2px;
+	margin-left: 2px;
 `;
 
 function Settings(props) {
@@ -122,7 +134,7 @@ function Settings(props) {
 	};
 
 	return (
-		<Navbar className={props.className}>
+		<div className={props.className}>
 			{signedIn
 				? <GoogleLogout
 					clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
@@ -140,18 +152,11 @@ function Settings(props) {
 								justifyContent: 'flex-start',
 								height: 30,
 								cursor: 'pointer',
-								marginRight: 14,
 								fontSize: 14,
 							}}
 						>
-							<img
+							<StyledAvatar
 								src={props.profile.imageUrl}
-								style={{
-									width: 28,
-									height: 28,
-									borderRadius: '50%',
-									marginRight: 10,
-								}}
 							/>
                             Log Out
 						</button>
@@ -175,7 +180,6 @@ function Settings(props) {
 								justifyContent: 'flex-start',
 								height: 30,
 								cursor: 'pointer',
-								marginRight: 14,
 								fontSize: 14,
 							}}
 						>
@@ -191,17 +195,9 @@ function Settings(props) {
 					justifyContent: 'flex-start',
 				}}
 			>
-				<SettingsIcon
+				<StyledSettingsIcon
 					onClick={toggleCollapse}
-					style={{
-						width: 28,
-						height: 28,
-						paddingTop: 5,
-						cursor: 'pointer',
-						transition: 'all 1000ms ease-in-out',
-						transform: collapseSettings ? 'rotate(359deg)' : null,
-						marginRight: 2,
-					}}
+					collapseSettings={collapseSettings}
 				/>
 				<div
 					style={{
@@ -214,7 +210,7 @@ function Settings(props) {
 						opacity: collapseSettings ? 1 : 0,
 						zIndex: collapseSettings ? 1 : -1,
 						fontSize: 14,
-						margin: '0 0 2px 6px',
+						margin: '3px 0 2px 6px',
 					}}
 				>
 					{
@@ -232,7 +228,7 @@ function Settings(props) {
 					}
 				</div>
 			</div>
-		</Navbar>
+		</div>
 	);
 }
 
@@ -243,6 +239,7 @@ Settings.propTypes = {
 	setProfile: PropTypes.func,
 	className: PropTypes.string,
 	degrees: PropTypes.array,
+	collapseSettings: PropTypes.bool,
 };
 
 export default Settings;

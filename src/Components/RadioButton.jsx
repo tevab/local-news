@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -38,38 +38,50 @@ const Radio = styled.input`
  }
 `;
 
-class RadioButton extends React.Component {
-	render() {
-		return (
-			<div
-				className={this.props.className}
+function RadioButton(props) {
+
+	const [width, setWidth] = useState(0);
+
+	useEffect(() => {
+		function handleResize() {
+			setWidth(window.innerWidth);
+		}
+		window.addEventListener('resize', handleResize);
+		handleResize();
+		return () => { 
+			window.removeEventListener('resize', handleResize);
+		};
+	}, [setWidth]);
+
+	return (
+		<div
+			className={props.className}
+			style={{
+				marginRight: 10,
+			}}
+		>
+			<Radio
+				type='radio'
+				name={props.id}
+				id={props.value}
+				value={props.value}
+				onChange={props.handleClick}
+				checked={props.value === props.buttonState}
 				style={{
-					marginRight: 10,
+					marginRight: 4,
+					cursor: 'pointer',
+				}}
+			/>
+			<label
+				htmlFor={props.value}
+				style={{
+					cursor: 'pointer',
 				}}
 			>
-				<Radio
-					type='radio'
-					name={this.props.id}
-					id={this.props.value}
-					value={this.props.value}
-					onChange={this.props.handleClick}
-					checked={this.props.value === this.props.buttonState}
-					style={{
-						marginRight: 4,
-						cursor: 'pointer',
-					}}
-				/>
-				<label
-					htmlFor={this.props.value}
-					style={{
-						cursor: 'pointer',
-					}}
-				>
-					{this.props.value}
-				</label>
-			</div>
-		);
-	}
+				{width > 910 ? props.value : props.value[0]}
+			</label>
+		</div>
+	);
 }
 
 RadioButton.propTypes = {

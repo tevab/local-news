@@ -1,24 +1,13 @@
 import React from 'react';
 import Search from './Search.jsx';
-import Settings from './Settings.jsx';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-const StyledSearch = styled(Search)`
-  display: none;
-`;
-
-const StyledSettings = styled(Settings)`
-  position: absolute;
-  top: 20px;
-  left: 20px;
-`;
 
 class Header extends React.Component {
 	render() {
 		return (
-			<div style={this.props.style}>
-				<StyledSearch
+			<div style={this.props.style} className={this.props.className}>
+				
+				<Search
 					loading={this.props.loading}
 					setSearch={this.props.setSearch}
 					search={this.props.search}
@@ -27,15 +16,6 @@ class Header extends React.Component {
 					error={this.props.error}
 					query={this.props.query}
 				/>
-				<StyledSettings
-					degree={this.props.degree}
-					setDegrees={this.props.setDegrees}
-					weather={this.props.weather}
-					setTemperature={this.props.setTemperature}
-					degrees={this.props.degrees}
-					profile={this.props.profile}
-					setProfile={this.props.setProfile}
-				/>
 			</div>
 		);
 	}
@@ -43,6 +23,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
 	style: PropTypes.any,
+	className: PropTypes.string,
 	loading: PropTypes.bool,
 	setSearch: PropTypes.func,
 	search: PropTypes.string,
