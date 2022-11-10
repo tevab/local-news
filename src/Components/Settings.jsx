@@ -7,6 +7,32 @@ import styled from 'styled-components';
 import SettingsIcon from '../Icons/SettingsIcon.jsx';
 import PropTypes from 'prop-types';
 
+const SettingsWrapper = styled.div`
+	overflow: hidden;
+	opacity: ${props => props.collapseSettings ? 1 : 0};
+	z-index: ${props => props.collapseSettings ? 1 : -1};
+	width: ${props => props.collapseSettings ? '194px' : 0};
+	transition: all 400ms ease-in-out;
+	@media (max-width: 760px) {
+		order: 1;
+		width: ${props => props.collapseSettings ? '81px' : 0};
+	}
+`;
+
+const SettingsContainer = styled.div`
+	width: 194px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	height: 30px;
+	color: #f5f5f5;
+	font-size: 14;
+	margin: 3px 0 2px 6px;
+	@media (max-width: 760px) {
+		width: 81px;
+	}
+`;
+
 const StyledAvatar = styled.img`
 	width: 28px;
 	height: 28px;
@@ -19,8 +45,8 @@ const StyledSettingsIcon = styled(SettingsIcon)`
 	height: 36px;
 	padding-top: 8px;
 	cursor: pointer;
-	transition: all 1000ms ease-in-out;
-	transform: ${props => props.collapseSettings ? 'rotate(359deg)' : null};
+	transition: all 400ms ease-in-out;
+	transform: ${props => props.collapseSettings ? 'rotate(-359deg)' : null};
 	margin-right: 2px;
 	margin-left: 2px;
 `;
@@ -195,38 +221,29 @@ function Settings(props) {
 					justifyContent: 'flex-start',
 				}}
 			>
+				<SettingsWrapper
+					collapseSettings={collapseSettings}
+				>
+					<SettingsContainer>
+						{
+							props.degrees.map(
+								(degree, i) => (
+									<RadioButton
+										key={i}
+										id='degrees'
+										value={degree}
+										handleClick={handleDegrees}
+										buttonState={props.degree}
+									/>
+								),
+							)
+						}
+					</SettingsContainer>
+				</SettingsWrapper>
 				<StyledSettingsIcon
 					onClick={toggleCollapse}
 					collapseSettings={collapseSettings}
 				/>
-				<div
-					style={{
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'flex-start',
-						height: 30,
-						color: '#f5f5f5',
-						transition: 'all 1000ms ease-in-out',
-						opacity: collapseSettings ? 1 : 0,
-						zIndex: collapseSettings ? 1 : -1,
-						fontSize: 14,
-						margin: '3px 0 2px 6px',
-					}}
-				>
-					{
-						props.degrees.map(
-							(degree, i) => (
-								<RadioButton
-									key={i}
-									id='degrees'
-									value={degree}
-									handleClick={handleDegrees}
-									buttonState={props.degree}
-								/>
-							),
-						)
-					}
-				</div>
 			</div>
 		</div>
 	);

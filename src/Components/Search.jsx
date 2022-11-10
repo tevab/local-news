@@ -10,6 +10,7 @@ const SearchWrapper = styled.div`
 	max-width: 400px;
 	box-shadow: rgb(32 18 55 / 32%) 0px 4px 4px;
 	transition: all 200ms ease-in-out;
+	z-index: 1;
 	&:hover {
 		background-color: #36323f;
 	}
